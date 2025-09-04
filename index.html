@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Artwork Analyzer</title>
+    <title>The Murals of Olcott</title>
     <style>
         * {
             margin: 0;
@@ -12,199 +12,194 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 50%, #9b59b6 100%);
             min-height: 100vh;
             color: white;
+            line-height: 1.6;
         }
 
         .container {
             max-width: 100vw;
             padding: 20px;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
         .header {
             text-align: center;
             margin-bottom: 30px;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        .camera-container {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto 20px;
             background: rgba(255,255,255,0.1);
+            padding: 25px;
             border-radius: 20px;
-            padding: 20px;
             backdrop-filter: blur(10px);
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
 
-        #video {
-            width: 100%;
-            border-radius: 15px;
-            background: #333;
-            display: none;
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: #ecf0f1;
         }
 
-        #canvas {
-            display: none;
-        }
-
-        .camera-placeholder {
-            width: 100%;
-            height: 300px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            border: 2px dashed rgba(255,255,255,0.5);
-        }
-
-        .camera-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            opacity: 0.7;
-        }
-
-        .controls {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 25px;
+        .intro {
             font-size: 1.1rem;
-            font-weight: 600;
+            opacity: 0.95;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .artist-quote {
+            font-size: 1rem;
+            opacity: 0.9;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 15px;
+        }
+
+        .wall-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .wall-btn {
+            background: linear-gradient(45deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 15px;
+            padding: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            min-width: 140px;
+            text-align: center;
         }
 
-        .btn-primary {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+        .wall-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, rgba(255,255,255,0.25), rgba(255,255,255,0.15));
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        .wall-btn h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #ecf0f1;
+        }
+
+        .wall-btn p {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        .wall-content {
+            display: none;
+            background: rgba(255,255,255,0.95);
+            color: #2c3e50;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .wall-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .wall-content h2 {
+            color: #3498db;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .wall-content h3 {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            margin: 20px 0 10px 0;
+        }
+
+        .wall-content p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            text-align: justify;
+        }
+
+        .wall-content ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .wall-content li {
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        .close-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
             color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 20px auto;
+            display: block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        .btn-secondary {
-            background: linear-gradient(45deg, #4834d4, #686de0);
-            color: white;
-        }
-
-        .btn-success {
-            background: linear-gradient(45deg, #26de81, #20bf6b);
-            color: white;
-        }
-
-        .btn:hover {
+        .close-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
 
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .analysis-container {
-            background: rgba(255,255,255,0.95);
-            color: #333;
-            border-radius: 20px;
-            padding: 25px;
-            margin-top: 20px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .analysis-container h3 {
-            color: #4834d4;
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-
-        .analysis-container p {
-            line-height: 1.6;
-            font-size: 1.05rem;
-        }
-
-        .loading {
+        .back-to-selection {
             text-align: center;
-            padding: 30px;
-        }
-
-        .loading-spinner {
-            border: 4px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top: 4px solid white;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .error {
-            background: linear-gradient(45deg, #ff4757, #ff3742);
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
             margin: 20px 0;
-            text-align: center;
         }
 
-        .captured-image {
-            width: 100%;
-            border-radius: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        .quote {
+            font-style: italic;
+            background: rgba(52, 152, 219, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
             .header h1 {
                 font-size: 2rem;
             }
             
-            .header p {
+            .intro {
                 font-size: 1rem;
             }
             
-            .btn {
-                padding: 12px 20px;
-                font-size: 1rem;
-                min-width: 120px;
+            .wall-selection {
+                grid-template-columns: 1fr;
             }
             
             .container {
                 padding: 15px;
+            }
+            
+            .wall-content {
+                padding: 20px;
+                max-height: 65vh;
             }
         }
     </style>
@@ -212,211 +207,188 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎨 Art Analyzer</h1>
-            <p>Point your camera at artwork to get instant AI-powered descriptions</p>
-        </div>
-
-        <div class="camera-container">
-            <video id="video" autoplay playsinline></video>
-            <canvas id="canvas"></canvas>
-            
-            <div id="camera-placeholder" class="camera-placeholder">
-                <div class="camera-icon">📷</div>
-                <p>Camera access required</p>
-                <small>We'll analyze artwork in real-time</small>
+            <h1>🎨 The Murals of Olcott</h1>
+            <p class="intro">
+                As you enter the Headquarters Building of the Theosophical Society in America, you discover on the four walls of the reception room a series of breathtaking murals in pastel colors. The basic concept of this series is the mystery and grandeur of evolving life.
+            </p>
+            <div class="artist-quote">
+                <strong>Richard B. Farley:</strong> "Possibly the whole idea of the decoration is arranged about the one thought that Life itself, its balance, is a continually changing performance... Life is all one plan, one balance, with many manifestations, many things right in their place."
             </div>
         </div>
 
-        <div class="controls">
-            <button id="startCamera" class="btn btn-primary">Start Camera</button>
-            <button id="captureBtn" class="btn btn-success" disabled>Analyze Artwork</button>
-            <button id="stopCamera" class="btn btn-secondary" disabled>Stop Camera</button>
+        <div id="wallSelection" class="wall-selection">
+            <div class="wall-btn" onclick="showWall('east')">
+                <h3>🌅 East Wall</h3>
+                <p>The Symbol of the Sevens - Matter, Mind, and Spirit interweaving in eternal cycles</p>
+            </div>
+            
+            <div class="wall-btn" onclick="showWall('south')">
+                <h3>🏛️ South Wall</h3>
+                <p>Ancient Symbols and Religious Evolution - From the swastika to the cross through the ages</p>
+            </div>
+            
+            <div class="wall-btn" onclick="showWall('west')">
+                <h3>🌅 West Wall</h3>
+                <p>The Sun and Life Forms - Creator and destroyer, eternal fire, and the evolution toward humanity</p>
+            </div>
+            
+            <div class="wall-btn" onclick="showWall('north')">
+                <h3>🌿 North Wall</h3>
+                <p>Evolution of Form - Elephantine figures, chlorophyll, and the astronomical design of life</p>
+            </div>
         </div>
 
-        <div id="analysisResult"></div>
+        <!-- East Wall Content -->
+        <div id="eastWall" class="wall-content">
+            <h2>🌅 You are viewing the East Wall</h2>
+            <div class="quote">
+                <p><strong>Mr. Farley explained:</strong> "At the bottom of the east wall is the symbol of the sevens—the interweaving of matter, mind and spirit. Spirit is the sharpest, the one that interpenetrates life to the greatest extent. The blunt-pointed one is matter. Each of the three figures returns to the starting point, each completing its cycle, interweaving... If you consider the top line as matter, you complete the cycle of the idea of matter always returning to its appointed place."</p>
+            </div>
+            
+            <h3>Symbolic Meaning</h3>
+            <p>The East Wall represents the fundamental Theosophical teaching of the threefold nature of existence. The interweaving patterns symbolize how matter, mind, and spirit are not separate entities but aspects of one unified reality that eternally cycle through manifestation and return.</p>
+            
+            <p>The sharpness of spirit represents its penetrating quality—its ability to infuse and enliven all forms of life. Matter, depicted as blunt-pointed, represents the dense, physical foundation upon which spiritual evolution builds. The mind serves as the bridge between these two aspects of reality.</p>
+            
+            <p>This wall teaches that all existence follows cyclical patterns, with each aspect—material, mental, and spiritual—completing its appointed journey before returning to its source, only to begin the cycle anew with greater consciousness and refinement.</p>
+            
+            <div class="back-to-selection">
+                <button class="close-btn" onclick="hideWall()">← Back to Wall Selection</button>
+            </div>
+        </div>
+
+        <!-- South Wall Content -->
+        <div id="southWall" class="wall-content">
+            <h2>🏛️ You are viewing the South Wall</h2>
+            
+            <p>On the south wall we find ancient symbols, in the order of their painting:</p>
+            
+            <ol>
+                <li><strong>The swastika</strong> - emblem of the whirling, creative fire of creation</li>
+                <li><strong>The triskelion</strong> - emblem of the Trinity</li>
+                <li><strong>The circle</strong> (representing water)</li>
+                <li><strong>The square</strong> (representing earth)</li>
+                <li><strong>The triangle</strong> (representing fire)</li>
+                <li><strong>The crescent</strong> (representing air)</li>
+                <li><strong>The duality of nature</strong> - shown through contrasts: black and white, masculine and feminine, negative and positive forces</li>
+                <li><strong>The five platonic solids</strong></li>
+            </ol>
+
+            <h3>The Planes of Consciousness</h3>
+            <p>The stairs depicted represent the planes of nature up which we climb in consciousness—from brute sensation to human realization.</p>
+
+            <h3>Religious Evolution</h3>
+            <p>Every religion is a stage necessary for each phase of the journey, and we discover that worship is suggested by several symbols. Pictured are: the druid, by stone arch and pillar; the Egyptian, by the pyramid; the Chinese is suggested by the temple and pilgrims; the Moslem by camels; the Hindu by elephants. Knights and horse, at the highest point of the mural, are there as related to the Christian Church.</p>
+
+            <p>Standing by the River of Life we see also various ecclesiastical figures representing embodiment of spiritual power in evolved men; a Roman Catholic bishop and a Greek Catholic bishop, Thor with antler, a druid priest with golden sickle, and an Indian priest with a snake.</p>
+
+            <h3>Universal Motherhood and Unity</h3>
+            <p>World motherhood is represented by the figure of the mother with the babe in her arms. The lotus flower which the babe carries is the symbol of all perfected creation. We have also in this mural these religious ideas: the tranquility of the Buddha, the might of the Assyrian, the mystery of the sphinx, the faith of the cross. The thought that life and matter are inseparable, ONE, is brought out by the Mayan God and animistic forms.</p>
+
+            <p>At the extreme left, in the lower corner, is pictured Mother Nature—basic force—underneath and supporting all creation. Thus we sense the southern mural as stressing two primal factors: religion and life—and these through countless kindred forms, and from ancient times by way of the cross.</p>
+
+            <h3>Evolution of the Cross Symbol</h3>
+            <p>Viewing from left to right we follow that varied and ancient symbol, the cross. At the extreme left is the pre-Christian and very early form. This is followed by the Tau, then the Celtic form (in green), and the Maltese form (in rose). The cross of St. Andrew is pictured in green, the Ansated cross in rose, and the Greek cross in blue. The cross of Constantine is next, and then, once more, a pre-Christian cross.</p>
+
+            <div class="quote">
+                <p>And so we begin to trace, through the magic of form, symbol, and color, a journey of the ages in the evolution of consciousness and form.</p>
+            </div>
+            
+            <div class="back-to-selection">
+                <button class="close-btn" onclick="hideWall()">← Back to Wall Selection</button>
+            </div>
+        </div>
+
+        <!-- West Wall Content -->
+        <div id="westWall" class="wall-content">
+            <h2>🌅 You are viewing the West Wall</h2>
+            
+            <div class="quote">
+                <p><strong>Mr. Farley explained:</strong> "The west wall indicates the following: Beginning with the sun, the lower group is a representation of the forms leading up to humanity, the vertebrates; and the group above shows those which are leading toward insect life... The central design on this wall is the sun from which all life is nourished... All forms of early religion contained sun worship..."</p>
+            </div>
+
+            <h3>The Creator and Destroyer</h3>
+            <p>The two figures above are very similar to the idea of creator and destroyer. The figure on the right is the destroyer, destroying the unfit, the forms which will later be reincarnated into fitter shapes... The figure on the left carries the 'eternal fire' to humanity, and heralds its approach.</p>
+
+            <h3>The Eternal Fire and Peace</h3>
+            <p>Oftentimes there has been a double purpose in this heralding: "The bringing of the eternal fires, and also the heralding, by a bird, of the peace which man will finally bring into the world..."</p>
+
+            <h3>Solar Significance</h3>
+            <p>The central sun represents the source of all life energy, both physical and spiritual. In Theosophical understanding, the sun is not merely the physical star that sustains life on Earth, but also the symbol of the spiritual sun—the divine source from which all consciousness emerges.</p>
+
+            <p>The evolutionary forms depicted show the great chain of being, from the simplest vertebrates ascending toward human consciousness, while also showing the parallel development of other life streams, such as the insect kingdom, each following its own path of evolution.</p>
+
+            <p>The dual aspect of creation and destruction shown in the two figures represents the eternal cosmic principle that old forms must be dissolved to make way for new and more perfect expressions of life. This is not destruction for its own sake, but the necessary process of spiritual evolution.</p>
+            
+            <div class="back-to-selection">
+                <button class="close-btn" onclick="hideWall()">← Back to Wall Selection</button>
+            </div>
+        </div>
+
+        <!-- North Wall Content -->
+        <div id="northWall" class="wall-content">
+            <h2>🌿 You are viewing the North Wall</h2>
+            
+            <h3>Evolution of Form</h3>
+            <p>The space on the north wall being limited, the artist here confined himself to elephantine figures as symbolic of the evolution of form. The figures are not of actual evolutionary succession, but the graded similar forms illustrate the principle of the evolution of form.</p>
+
+            <h3>The Significance of Chlorophyll</h3>
+            <p>The leaf-forms which appear in this mural are complementary to the group of symbols which appear just opposite. These leaves remind us that they serve the purpose of collecting chlorophyll, drawing from the sun that energy which is basic to all that lives. Animals do not have this power of extracting energy directly from the sun; thus this possession of chlorophyll seems as good a dividing line as any between the animal and vegetable kingdoms.</p>
+
+            <h3>Cosmic Patterns</h3>
+            <p>The parallel column above the north wall shows pollen grains in their various forms, while the snow crystals are shown in an astronomical design representing the life of the stars in their courses.</p>
+
+            <h3>Universal Life Principles</h3>
+            <p>This wall illustrates the Theosophical teaching that the same evolutionary principles operating in the development of animal forms also govern the plant kingdom and extend even to the cosmic realm. The elephantine forms represent not just physical evolution but the gradual unfoldment of consciousness through increasingly complex forms.</p>
+
+            <p>The emphasis on chlorophyll points to a fundamental truth: different kingdoms of nature have developed different ways of receiving and utilizing the life force that flows from the spiritual sun. Plants capture this energy directly through their leaves, while animals must obtain it indirectly through consuming plants or other animals.</p>
+
+            <p>The astronomical design connecting earthly pollen and snow crystals to stellar patterns demonstrates the Hermetic principle "As above, so below"—the same geometric laws and principles that govern the formation of microscopic structures also operate in the vast cosmos, showing the unity underlying all manifestation.</p>
+            
+            <div class="back-to-selection">
+                <button class="close-btn" onclick="hideWall()">← Back to Wall Selection</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        let stream = null;
-        let video = document.getElementById('video');
-        let canvas = document.getElementById('canvas');
-        let ctx = canvas.getContext('2d');
-
-        // Button elements
-        const startCameraBtn = document.getElementById('startCamera');
-        const captureBtn = document.getElementById('captureBtn');
-        const stopCameraBtn = document.getElementById('stopCamera');
-        const placeholder = document.getElementById('camera-placeholder');
-        const analysisResult = document.getElementById('analysisResult');
-
-        // Check if device supports camera
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            showError('Camera access is not supported on this device or browser.');
-        }
-
-        startCameraBtn.addEventListener('click', startCamera);
-        captureBtn.addEventListener('click', captureAndAnalyze);
-        stopCameraBtn.addEventListener('click', stopCamera);
-
-        async function startCamera() {
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { 
-                        facingMode: 'environment', // Use back camera if available
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
-                    } 
-                });
-                
-                video.srcObject = stream;
-                video.style.display = 'block';
-                placeholder.style.display = 'none';
-                
-                startCameraBtn.disabled = true;
-                captureBtn.disabled = false;
-                stopCameraBtn.disabled = false;
-                
-                // Clear any previous analysis
-                analysisResult.innerHTML = '';
-                
-            } catch (error) {
-                console.error('Error accessing camera:', error);
-                let errorMsg = 'Unable to access camera. ';
-                
-                if (error.name === 'NotAllowedError') {
-                    errorMsg += 'Please allow camera permissions and try again.';
-                } else if (error.name === 'NotFoundError') {
-                    errorMsg += 'No camera found on this device.';
-                } else {
-                    errorMsg += 'Please check your camera settings.';
-                }
-                
-                showError(errorMsg);
-            }
-        }
-
-        function stopCamera() {
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
-                stream = null;
-            }
+        function showWall(wallId) {
+            // Hide wall selection
+            document.getElementById('wallSelection').style.display = 'none';
             
-            video.style.display = 'none';
-            placeholder.style.display = 'flex';
-            
-            startCameraBtn.disabled = false;
-            captureBtn.disabled = true;
-            stopCameraBtn.disabled = true;
-        }
-
-        async function captureAndAnalyze() {
-            if (!stream) return;
-            
-            // Set canvas size to match video
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            
-            // Draw current frame to canvas
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            
-            // Convert to base64
-            const imageDataUrl = canvas.toDataURL('image/jpeg', 0.8);
-            const base64Data = imageDataUrl.split(',')[1];
-            
-            // Show loading state
-            showLoading();
-            
-            try {
-                // Send to Claude API for analysis
-                const analysis = await analyzeArtwork(base64Data, imageDataUrl);
-                showAnalysis(analysis, imageDataUrl);
-            } catch (error) {
-                console.error('Analysis error:', error);
-                showError('Failed to analyze the artwork. Please try again.');
-            }
-        }
-
-        async function analyzeArtwork(base64Data, imageDataUrl) {
-            const response = await fetch("https://api.anthropic.com/v1/messages", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    model: "claude-sonnet-4-20250514",
-                    max_tokens: 1000,
-                    messages: [
-                        {
-                            role: "user",
-                            content: [
-                                {
-                                    type: "image",
-                                    source: {
-                                        type: "base64",
-                                        media_type: "image/jpeg",
-                                        data: base64Data,
-                                    }
-                                },
-                                {
-                                    type: "text",
-                                    text: "Please analyze this artwork and provide a detailed description. Include information about: the artistic style, medium (if discernible), composition, colors, subject matter, possible time period, and any notable artistic techniques or elements you observe. If you recognize the artwork or artist, please mention that as well. Keep your response engaging and informative for someone viewing the art."
-                                }
-                            ]
-                        }
-                    ]
-                })
+            // Hide all wall contents
+            const wallContents = document.querySelectorAll('.wall-content');
+            wallContents.forEach(content => {
+                content.classList.remove('active');
             });
-
-            if (!response.ok) {
-                throw new Error(`API request failed: ${response.status}`);
-            }
-
-            const data = await response.json();
-            return data.content[0].text;
+            
+            // Show selected wall content
+            const selectedWall = document.getElementById(wallId + 'Wall');
+            selectedWall.classList.add('active');
+            
+            // Scroll to top of content
+            selectedWall.scrollTop = 0;
+            window.scrollTo(0, 0);
         }
 
-        function showLoading() {
-            analysisResult.innerHTML = `
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    <p>Analyzing artwork with AI...</p>
-                </div>
-            `;
+        function hideWall() {
+            // Hide all wall contents
+            const wallContents = document.querySelectorAll('.wall-content');
+            wallContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show wall selection
+            document.getElementById('wallSelection').style.display = 'grid';
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
         }
-
-        function showAnalysis(analysis, imageUrl) {
-            analysisResult.innerHTML = `
-                <div class="analysis-container">
-                    <img src="${imageUrl}" alt="Captured artwork" class="captured-image">
-                    <h3>🎨 Artwork Analysis</h3>
-                    <p>${analysis}</p>
-                </div>
-            `;
-        }
-
-        function showError(message) {
-            analysisResult.innerHTML = `
-                <div class="error">
-                    <strong>⚠️ Error:</strong> ${message}
-                </div>
-            `;
-        }
-
-        // Handle page visibility changes (stop camera when page is hidden)
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden && stream) {
-                stopCamera();
-            }
-        });
 
         // Handle orientation changes on mobile
         window.addEventListener('orientationchange', function() {
             setTimeout(() => {
-                if (stream && video.style.display !== 'none') {
-                    // Refresh camera after orientation change
-                    stopCamera();
-                    setTimeout(startCamera, 100);
-                }
+                window.scrollTo(0, 0);
             }, 100);
         });
     </script>
