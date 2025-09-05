@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Murals of Olcott</title>
+    <title>The Murals of Olcott - 3D Experience</title>
     <style>
         * {
             margin: 0;
@@ -17,6 +17,7 @@
             min-height: 100vh;
             color: white;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .container {
@@ -39,7 +40,6 @@
             font-size: 2.5rem;
             margin-bottom: 15px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            color: #ecf0f1;
         }
 
         .intro {
@@ -57,43 +57,125 @@
             margin-top: 15px;
         }
 
-        .wall-selection {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+        /* 3D Room */
+        .room-container {
+            perspective: 1000px;
+            width: 100%;
+            height: 400px;
             margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .wall-btn {
-            background: linear-gradient(45deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
-            border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 15px;
-            padding: 20px;
+        .room {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            transform-style: preserve-3d;
+            transform: rotateX(-10deg) rotateY(0deg);
+            transition: transform 0.8s ease;
+        }
+
+        .wall {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
             cursor: pointer;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            padding: 20px;
         }
 
-        .wall-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            background: linear-gradient(45deg, rgba(255,255,255,0.25), rgba(255,255,255,0.15));
-            border-color: rgba(255,255,255,0.4);
+        .wall:hover {
+            border-color: rgba(255,255,255,0.6);
         }
 
-        .wall-btn h3 {
-            font-size: 1.5rem;
+        .wall h3 {
+            font-size: 1.4rem;
             margin-bottom: 10px;
-            color: #ecf0f1;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
-        .wall-btn p {
+        .wall p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .wall-image {
+            width: 80%;
+            height: 60%;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        .east-wall {
+            transform: rotateY(0deg) translateZ(150px);
+            background: linear-gradient(45deg, rgba(255,193,7,0.3), rgba(255,152,0,0.3));
+        }
+
+        .south-wall {
+            transform: rotateY(90deg) translateZ(150px);
+            background: linear-gradient(45deg, rgba(244,67,54,0.3), rgba(233,30,99,0.3));
+        }
+
+        .west-wall {
+            transform: rotateY(180deg) translateZ(150px);
+            background: linear-gradient(45deg, rgba(255,87,34,0.3), rgba(255,152,0,0.3));
+        }
+
+        .north-wall {
+            transform: rotateY(270deg) translateZ(150px);
+            background: linear-gradient(45deg, rgba(76,175,80,0.3), rgba(139,195,74,0.3));
+        }
+
+        /* Controls */
+        .instructions {
+            text-align: center;
+            margin: 20px 0;
             font-size: 0.95rem;
             opacity: 0.8;
         }
 
+        .room-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 12px 20px;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .control-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .control-btn.active {
+            background: rgba(52,152,219,0.6);
+            border-color: rgba(52,152,219,0.8);
+        }
+
+        /* Content sections */
         .wall-content {
             display: none;
             background: rgba(255,255,255,0.95);
@@ -147,6 +229,15 @@
             font-size: 1.05rem;
         }
 
+        .quote {
+            font-style: italic;
+            background: rgba(52, 152, 219, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+
         .close-btn {
             background: linear-gradient(45deg, #e74c3c, #c0392b);
             color: white;
@@ -166,18 +257,14 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
 
-        .back-to-selection {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .quote {
-            font-style: italic;
-            background: rgba(52, 152, 219, 0.1);
-            padding: 15px;
+        .content-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
             border-radius: 10px;
-            margin: 15px 0;
-            border-left: 4px solid #3498db;
+            margin: 15px auto;
+            display: block;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         @media (max-width: 768px) {
@@ -185,12 +272,19 @@
                 font-size: 2rem;
             }
             
-            .intro {
-                font-size: 1rem;
+            .room {
+                width: 250px;
+                height: 250px;
             }
             
-            .wall-selection {
-                grid-template-columns: 1fr;
+            .wall {
+                width: 250px;
+                height: 250px;
+                padding: 15px;
+            }
+            
+            .wall h3 {
+                font-size: 1.2rem;
             }
             
             .container {
@@ -207,7 +301,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎨 The Murals of Olcott</h1>
+            <h1>The Murals of Olcott</h1>
             <p class="intro">
                 As you enter the Headquarters Building of the Theosophical Society in America, you discover on the four walls of the reception room a series of breathtaking murals in pastel colors. The basic concept of this series is the mystery and grandeur of evolving life.
             </p>
@@ -216,31 +310,49 @@
             </div>
         </div>
 
-        <div id="wallSelection" class="wall-selection">
-            <div class="wall-btn" onclick="showWall('east')">
-                <h3>🌅 East Wall</h3>
-                <p>The Symbol of the Sevens - Matter, Mind, and Spirit interweaving in eternal cycles</p>
+        <div class="instructions">
+            <p>Click the buttons below to rotate around the room and explore each wall's spiritual symbolism</p>
+        </div>
+        
+        <div class="room-container">
+            <div class="room" id="room">
+                <div class="wall east-wall" onclick="exploreWall('east')">
+                    <!-- <img src="east-wall.jpg" alt="East Wall Mural" class="wall-image"> -->
+                    <h3>East Wall</h3>
+                    <p>The Symbol of the Sevens</p>
+                </div>
+                
+                <div class="wall south-wall" onclick="exploreWall('south')">
+                    <!-- <img src="south-wall.jpg" alt="South Wall Mural" class="wall-image"> -->
+                    <h3>South Wall</h3>
+                    <p>Ancient Symbols & Religious Evolution</p>
+                </div>
+                
+                <div class="wall west-wall" onclick="exploreWall('west')">
+                    <!-- <img src="west-wall.jpg" alt="West Wall Mural" class="wall-image"> -->
+                    <h3>West Wall</h3>
+                    <p>The Sun & Life Forms</p>
+                </div>
+                
+                <div class="wall north-wall" onclick="exploreWall('north')">
+                    <!-- <img src="north-wall.jpg" alt="North Wall Mural" class="wall-image"> -->
+                    <h3>North Wall</h3>
+                    <p>Evolution of Form</p>
+                </div>
             </div>
-            
-            <div class="wall-btn" onclick="showWall('south')">
-                <h3>🏛️ South Wall</h3>
-                <p>Ancient Symbols and Religious Evolution - From the swastika to the cross through the ages</p>
-            </div>
-            
-            <div class="wall-btn" onclick="showWall('west')">
-                <h3>🌅 West Wall</h3>
-                <p>The Sun and Life Forms - Creator and destroyer, eternal fire, and the evolution toward humanity</p>
-            </div>
-            
-            <div class="wall-btn" onclick="showWall('north')">
-                <h3>🌿 North Wall</h3>
-                <p>Evolution of Form - Elephantine figures, chlorophyll, and the astronomical design of life</p>
-            </div>
+        </div>
+
+        <div class="room-controls">
+            <button class="control-btn active" onclick="exploreWall('east')">East Wall</button>
+            <button class="control-btn" onclick="exploreWall('south')">South Wall</button>
+            <button class="control-btn" onclick="exploreWall('west')">West Wall</button>
+            <button class="control-btn" onclick="exploreWall('north')">North Wall</button>
         </div>
 
         <!-- East Wall Content -->
         <div id="eastWall" class="wall-content">
-            <h2>🌅 You are viewing the East Wall</h2>
+            <h2>You are viewing the East Wall</h2>
+            <!-- <img src="east-wall-detail.jpg" alt="East Wall Detail" class="content-image"> -->
             <div class="quote">
                 <p><strong>Mr. Farley explained:</strong> "At the bottom of the east wall is the symbol of the sevens—the interweaving of matter, mind and spirit. Spirit is the sharpest, the one that interpenetrates life to the greatest extent. The blunt-pointed one is matter. Each of the three figures returns to the starting point, each completing its cycle, interweaving... If you consider the top line as matter, you complete the cycle of the idea of matter always returning to its appointed place."</p>
             </div>
@@ -252,16 +364,15 @@
             
             <p>This wall teaches that all existence follows cyclical patterns, with each aspect—material, mental, and spiritual—completing its appointed journey before returning to its source, only to begin the cycle anew with greater consciousness and refinement.</p>
             
-            <div class="back-to-selection">
-                <button class="close-btn" onclick="hideWall()">← Back to Wall Selection</button>
-            </div>
+            <button class="close-btn" onclick="returnToRoom()">← Back to Room View</button>
         </div>
 
         <!-- South Wall Content -->
         <div id="southWall" class="wall-content">
-            <h2>🏛️ You are viewing the South Wall</h2>
+            <h2>You are viewing the South Wall</h2>
+            <!-- <img src="south-wall-detail.jpg" alt="South Wall Detail" class="content-image"> -->
             
-            <p>On the south wall we find ancient symbols, in the order of their painting:</p>
+            <p>At the right of the office window, on the south wall we find ancient symbols, in the order of their painting:</p>
             
             <ol>
                 <li><strong>The swastika</strong> - emblem of the whirling, creative fire of creation</li>
@@ -280,7 +391,7 @@
             <h3>Religious Evolution</h3>
             <p>Every religion is a stage necessary for each phase of the journey, and we discover that worship is suggested by several symbols. Pictured are: the druid, by stone arch and pillar; the Egyptian, by the pyramid; the Chinese is suggested by the temple and pilgrims; the Moslem by camels; the Hindu by elephants. Knights and horse, at the highest point of the mural, are there as related to the Christian Church.</p>
 
-            <p>Standing by the River of Life we see also various ecclesiastical figures representing embodiment of spiritual power in evolved men; a Roman Catholic bishop and a Greek Catholic bishop, Thor with antler, a druid priest with golden sickle, and an Indian priest with a snake.</p>
+            <p>Standing by the River of Life we see also various ecclesiastical figures representing embodiment of spiritual power in evolved men: a Roman Catholic bishop and a Greek Catholic bishop, Thor with antler, a druid priest with golden sickle, and an Indian priest with a snake.</p>
 
             <h3>Universal Motherhood and Unity</h3>
             <p>World motherhood is represented by the figure of the mother with the babe in her arms. The lotus flower which the babe carries is the symbol of all perfected creation. We have also in this mural these religious ideas: the tranquility of the Buddha, the might of the Assyrian, the mystery of the sphinx, the faith of the cross. The thought that life and matter are inseparable, ONE, is brought out by the Mayan God and animistic forms.</p>
@@ -294,14 +405,13 @@
                 <p>And so we begin to trace, through the magic of form, symbol, and color, a journey of the ages in the evolution of consciousness and form.</p>
             </div>
             
-            <div class="back-to-selection">
-                <button class="close-btn" onclick="hideWall()">← Back to Wall Selection</button>
-            </div>
+            <button class="close-btn" onclick="returnToRoom()">← Back to Room View</button>
         </div>
 
         <!-- West Wall Content -->
         <div id="westWall" class="wall-content">
-            <h2>🌅 You are viewing the West Wall</h2>
+            <h2>You are viewing the West Wall</h2>
+            <img src="https://dreynater-sketch.github.io/Mural_Theosophy/Mural_starburst.jpg" alt="West Wall Central Sun Mural" class="content-image">
             
             <div class="quote">
                 <p><strong>Mr. Farley explained:</strong> "The west wall indicates the following: Beginning with the sun, the lower group is a representation of the forms leading up to humanity, the vertebrates; and the group above shows those which are leading toward insect life... The central design on this wall is the sun from which all life is nourished... All forms of early religion contained sun worship..."</p>
@@ -313,21 +423,23 @@
             <h3>The Eternal Fire and Peace</h3>
             <p>Oftentimes there has been a double purpose in this heralding: "The bringing of the eternal fires, and also the heralding, by a bird, of the peace which man will finally bring into the world..."</p>
 
+            <h3>The Seven Rays</h3>
+            <p>The colors over the sun represent the seven rays; again carried out in the colors of the rays of the spectrum on the wall adjoining.</p>
+
             <h3>Solar Significance</h3>
-            <p>The central sun represents the source of all life energy, both physical and spiritual. In Theosophical understanding, the sun is not merely the physical star that sustains life on Earth, but also the symbol of the spiritual sun—the divine source from which all consciousness emerges.</p>
+            <p>The central sun represents the source from which all life is nourished. All forms of early religion contained sun worship, recognizing this fundamental truth about the source of life energy.</p>
 
-            <p>The evolutionary forms depicted show the great chain of being, from the simplest vertebrates ascending toward human consciousness, while also showing the parallel development of other life streams, such as the insect kingdom, each following its own path of evolution.</p>
+            <p>The evolutionary forms depicted show the progression from the lower group representing forms leading up to humanity (the vertebrates), while the group above shows those which are leading toward insect life, each following its own path of development.</p>
 
-            <p>The dual aspect of creation and destruction shown in the two figures represents the eternal cosmic principle that old forms must be dissolved to make way for new and more perfect expressions of life. This is not destruction for its own sake, but the necessary process of spiritual evolution.</p>
+            <p>The dual aspect of creation and destruction shown in the two figures represents the cosmic principle that the destroyer destroys the unfit, the forms which will later be reincarnated into fitter shapes, while the figure on the left carries the 'eternal fire' to humanity and heralds its approach through the peace which man will finally bring into the world.</p>
             
-            <div class="back-to-selection">
-                <button class="close-btn" onclick="hideWall()">← Back to Wall Selection</button>
-            </div>
+            <button class="close-btn" onclick="returnToRoom()">← Back to Room View</button>
         </div>
 
         <!-- North Wall Content -->
         <div id="northWall" class="wall-content">
-            <h2>🌿 You are viewing the North Wall</h2>
+            <h2>You are viewing the North Wall</h2>
+            <!-- <img src="north-wall-detail.jpg" alt="North Wall Detail" class="content-image"> -->
             
             <h3>Evolution of Form</h3>
             <p>The space on the north wall being limited, the artist here confined himself to elephantine figures as symbolic of the evolution of form. The figures are not of actual evolutionary succession, but the graded similar forms illustrate the principle of the evolution of form.</p>
@@ -344,52 +456,104 @@
             <p>The emphasis on chlorophyll points to a fundamental truth: different kingdoms of nature have developed different ways of receiving and utilizing the life force that flows from the spiritual sun. Plants capture this energy directly through their leaves, while animals must obtain it indirectly through consuming plants or other animals.</p>
 
             <p>The astronomical design connecting earthly pollen and snow crystals to stellar patterns demonstrates the Hermetic principle "As above, so below"—the same geometric laws and principles that govern the formation of microscopic structures also operate in the vast cosmos, showing the unity underlying all manifestation.</p>
-            
-            <div class="back-to-selection">
-                <button class="close-btn" onclick="hideWall()">← Back to Wall Selection</button>
-            </div>
         </div>
     </div>
 
     <script>
-        function showWall(wallId) {
-            // Hide wall selection
-            document.getElementById('wallSelection').style.display = 'none';
+        let currentWall = 'east';
+        let currentRotation = 0;
+
+        function exploreWall(wallId) {
+            // Set which wall we're looking at
+            currentWall = wallId;
             
-            // Hide all wall contents
-            const wallContents = document.querySelectorAll('.wall-content');
-            wallContents.forEach(content => {
-                content.classList.remove('active');
+            // Calculate rotation angle
+            const rotations = { 'east': 0, 'south': 90, 'west': 180, 'north': 270 };
+            currentRotation = rotations[wallId];
+            
+            // Rotate the room
+            const room = document.getElementById('room');
+            room.style.transform = `rotateX(-10deg) rotateY(-${currentRotation}deg)`;
+            
+            // Update active button
+            const buttons = document.querySelectorAll('.control-btn');
+            buttons.forEach((btn, index) => {
+                btn.classList.remove('active');
+                if (index === currentRotation / 90) {
+                    btn.classList.add('active');
+                }
             });
             
-            // Show selected wall content
-            const selectedWall = document.getElementById(wallId + 'Wall');
-            selectedWall.classList.add('active');
-            
-            // Scroll to top of content
-            selectedWall.scrollTop = 0;
-            window.scrollTo(0, 0);
+            // After rotation, show content
+            setTimeout(() => {
+                document.querySelector('.room-container').style.display = 'none';
+                document.querySelector('.room-controls').style.display = 'none';
+                document.querySelector('.instructions').style.display = 'none';
+                
+                // Hide all content
+                document.querySelectorAll('.wall-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show selected wall content
+                document.getElementById(wallId + 'Wall').classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }, 800);
         }
 
-        function hideWall() {
-            // Hide all wall contents
-            const wallContents = document.querySelectorAll('.wall-content');
-            wallContents.forEach(content => {
+        function returnToRoom() {
+            // Hide all content
+            document.querySelectorAll('.wall-content').forEach(content => {
                 content.classList.remove('active');
             });
             
-            // Show wall selection
-            document.getElementById('wallSelection').style.display = 'grid';
+            // Show room elements
+            document.querySelector('.room-container').style.display = 'flex';
+            document.querySelector('.room-controls').style.display = 'flex';
+            document.querySelector('.instructions').style.display = 'block';
             
             // Scroll to top
             window.scrollTo(0, 0);
         }
 
-        // Handle orientation changes on mobile
-        window.addEventListener('orientationchange', function() {
-            setTimeout(() => {
-                window.scrollTo(0, 0);
-            }, 100);
+        // Touch controls for mobile
+        let startX = 0;
+        let isDragging = false;
+
+        document.getElementById('room').addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        });
+
+        document.getElementById('room').addEventListener('touchmove', function(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+        });
+
+        document.getElementById('room').addEventListener('touchend', function(e) {
+            if (!isDragging) return;
+            
+            const endX = e.changedTouches[0].clientX;
+            const diffX = startX - endX;
+            
+            if (Math.abs(diffX) > 50) {
+                const walls = ['east', 'south', 'west', 'north'];
+                let currentIndex = walls.indexOf(currentWall);
+                
+                if (diffX > 0) {
+                    // Swipe left - next wall
+                    currentIndex = (currentIndex + 1) % 4;
+                } else {
+                    // Swipe right - previous wall  
+                    currentIndex = (currentIndex - 1 + 4) % 4;
+                }
+                
+                exploreWall(walls[currentIndex]);
+            }
+            
+            isDragging = false;
         });
     </script>
 </body>
