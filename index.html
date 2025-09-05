@@ -149,6 +149,298 @@
             border-left: 4px solid #3498db;
         }
 
+        .deep-dive-btn {
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 20px auto;
+            display: block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .deep-dive-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .detailed-content {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #3498db;
+        }
+
+        .detailed-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .wall-gallery {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .wall-image {
+                height: 200px;
+            }
+            
+            .wall-content {
+                padding: 20px;
+                max-height: 60vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>The Murals of Olcott</h1>
+    </div>
+
+    <p class="instruction">Click on any wall below to explore its spiritual symbolism and meaning</p>
+
+    <div class="wall-gallery">
+        <div class="wall-item" onclick="showWallContent('east')" id="eastWall">
+            <img src="https://dreynater-sketch.github.io/Mural_Theosophy/East_wall.jpg" alt="East Wall Mural" class="wall-image">
+            <div class="wall-label">EAST</div>
+        </div>
+
+        <div class="wall-item" onclick="showWallContent('south')" id="southWall">
+            <img src="https://dreynater-sketch.github.io/Mural_Theosophy/South_wall.jpg" alt="South Wall Mural" class="wall-image">
+            <div class="wall-label">SOUTH</div>
+        </div>
+
+        <div class="wall-item" onclick="showWallContent('west')" id="westWall">
+            <img src="https://dreynater-sketch.github.io/Mural_Theosophy/West_wall.jpg" alt="West Wall Mural" class="wall-image">
+            <div class="wall-label">WEST</div>
+        </div>
+
+        <div class="wall-item" onclick="showWallContent('north')" id="northWall">
+            <img src="https://dreynater-sketch.github.io/Mural_Theosophy/North_wall.jpg" alt="North Wall Mural" class="wall-image">
+            <div class="wall-label">NORTH</div>
+        </div>
+    </div>
+
+    <!-- East Wall Content -->
+    <div id="eastContent" class="wall-content">
+        <h2>East Wall - Flowing Patterns and Cycles</h2>
+        <p>What you're seeing here are beautiful, flowing ribbon-like patterns that seem to dance across the wall. These curved lines weave in and out of each other, creating a sense of movement and rhythm. Some lines appear sharp and pointed, while others are more rounded and gentle.</p>
+        
+        <p>The patterns suggest the idea that everything in life is connected - that different forces flow together and apart, then come back together again. It's like watching the flow of energy itself, painted in soft, peaceful colors that make you think about how all things in nature have their own cycles and rhythms.</p>
+        
+        <button class="deep-dive-btn" onclick="toggleDeepDive('east')">🔍 Deep Dive - Learn More</button>
+        
+        <div id="eastDetailed" class="detailed-content">
+            <h3>The Symbol of the Sevens - Detailed Analysis</h3>
+            <div class="quote">
+                <p><strong>Mr. Farley explained:</strong> "At the bottom of the east wall is the symbol of the sevens—the interweaving of matter, mind and spirit. Spirit is the sharpest, the one that interpenetrates life to the greatest extent. The blunt-pointed one is matter. Each of the three figures returns to the starting point, each completing its cycle, interweaving... If you consider the top line as matter, you complete the cycle of the idea of matter always returning to its appointed place."</p>
+            </div>
+            
+            <h3>Symbolic Meaning</h3>
+            <p>The East Wall represents the fundamental Theosophical teaching of the threefold nature of existence. The interweaving patterns symbolize how matter, mind, and spirit are not separate entities but aspects of one unified reality that eternally cycle through manifestation and return.</p>
+            
+            <p>The sharpness of spirit represents its penetrating quality—its ability to infuse and enliven all forms of life. Matter, depicted as blunt-pointed, represents the dense, physical foundation upon which spiritual evolution builds. The mind serves as the bridge between these two aspects of reality.</p>
+            
+            <p>This wall teaches that all existence follows cyclical patterns, with each aspect—material, mental, and spiritual—completing its appointed journey before returning to its source, only to begin the cycle anew with greater consciousness and refinement.</p>
+        </div>
+    </div>
+
+    <!-- South Wall Content -->
+    <div id="southContent" class="wall-content">
+        <h2>South Wall - A Journey Through Time and Faith</h2>
+        <p>This wall tells the story of humanity's spiritual journey through colorful symbols and figures. You'll see ancient symbols arranged like stepping stones - circles, triangles, and other geometric shapes that different cultures have used to represent the elements of earth, water, fire, and air.</p>
+        
+        <p>Moving across the wall, you can spot figures representing different religious traditions: pyramids for ancient Egypt, temples for the East, and various spiritual leaders throughout history. There's a beautiful image of a mother holding a child with a lotus flower, representing new life and hope. The wall shows how different peoples and cultures have all been searching for meaning and connection to something greater than themselves.</p>
+        
+        <button class="deep-dive-btn" onclick="toggleDeepDive('south')">🔍 Deep Dive - Learn More</button>
+        
+        <div id="southDetailed" class="detailed-content">
+            <h3>Ancient Symbols & Religious Evolution - Detailed Analysis</h3>
+            <p>At the right of the office window, on the south wall we find ancient symbols, in the order of their painting:</p>
+            
+            <ol>
+                <li><strong>The swastika</strong> - emblem of the whirling, creative fire of creation</li>
+                <li><strong>The triskelion</strong> - emblem of the Trinity</li>
+                <li><strong>The circle</strong> (representing water)</li>
+                <li><strong>The square</strong> (representing earth)</li>
+                <li><strong>The triangle</strong> (representing fire)</li>
+                <li><strong>The crescent</strong> (representing air)</li>
+                <li><strong>The duality of nature</strong> - shown through contrasts: black and white, masculine and feminine, negative and positive forces</li>
+                <li><strong>The five platonic solids</strong></li>
+            </ol>
+
+            <h3>The Planes of Consciousness</h3>
+            <p>The stairs depicted represent the planes of nature up which we climb in consciousness—from brute sensation to human realization.</p>
+
+            <h3>Religious Evolution</h3>
+            <p>Every religion is a stage necessary for each phase of the journey, and we discover that worship is suggested by several symbols. Pictured are: the druid, by stone arch and pillar; the Egyptian, by the pyramid; the Chinese is suggested by the temple and pilgrims; the Moslem by camels; the Hindu by elephants. Knights and horse, at the highest point of the mural, are there as related to the Christian Church.</p>
+
+            <p>Standing by the River of Life we see also various ecclesiastical figures representing embodiment of spiritual power in evolved men: a Roman Catholic bishop and a Greek Catholic bishop, Thor with antler, a druid priest with golden sickle, and an Indian priest with a snake.</p>
+
+            <h3>Universal Motherhood and Unity</h3>
+            <p>World motherhood is represented by the figure of the mother with the babe in her arms. The lotus flower which the babe carries is the symbol of all perfected creation. We have also in this mural these religious ideas: the tranquility of the Buddha, the might of the Assyrian, the mystery of the sphinx, the faith of the cross. The thought that life and matter are inseparable, ONE, is brought out by the Mayan God and animistic forms.</p>
+
+            <p>At the extreme left, in the lower corner, is pictured Mother Nature—basic force—underneath and supporting all creation. Thus we sense the southern mural as stressing two primal factors: religion and life—and these through countless kindred forms, and from ancient times by way of the cross.</p>
+
+            <h3>Evolution of the Cross Symbol</h3>
+            <p>Viewing from left to right we follow that varied and ancient symbol, the cross. At the extreme left is the pre-Christian and very early form. This is followed by the Tau, then the Celtic form (in green), and the Maltese form (in rose). The cross of St. Andrew is pictured in green, the Ansated cross in rose, and the Greek cross in blue. The cross of Constantine is next, and then, once more, a pre-Christian cross.</p>
+
+            <div class="quote">
+                <p>And so we begin to trace, through the magic of form, symbol, and color, a journey of the ages in the evolution of consciousness and form.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- West Wall Content -->
+    <div id="westContent" class="wall-content">
+        <h2>West Wall - The Sun and the Circle of Life</h2>
+        <p>The centerpiece of this wall is a brilliant, radiating sun with beams of light streaming outward in all directions. This isn't just any sun - it's painted as the source of all life and energy, with rainbow colors representing different types of spiritual light.</p>
+        
+        <p>Around the sun, you'll see flying figures that look like angels or spiritual messengers. Below, there are various animals and creatures representing the evolution of life on Earth - some moving toward becoming more like humans, others following different paths of development. The whole wall celebrates the sun as the giver of life and shows how all living things are part of one great family tree.</p>
+        
+        <button class="deep-dive-btn" onclick="toggleDeepDive('west')">🔍 Deep Dive - Learn More</button>
+        
+        <div id="westDetailed" class="detailed-content">
+            <h3>The Central Sun & Life Forms - Detailed Analysis</h3>
+            <div class="quote">
+                <p><strong>Mr. Farley explained:</strong> "The west wall indicates the following: Beginning with the sun, the lower group is a representation of the forms leading up to humanity, the vertebrates; and the group above shows those which are leading toward insect life... The central design on this wall is the sun from which all life is nourished... All forms of early religion contained sun worship..."</p>
+            </div>
+
+            <h3>The Creator and Destroyer</h3>
+            <p>The two figures above are very similar to the idea of creator and destroyer. The figure on the right is the destroyer, destroying the unfit, the forms which will later be reincarnated into fitter shapes... The figure on the left carries the 'eternal fire' to humanity, and heralds its approach.</p>
+
+            <h3>The Eternal Fire and Peace</h3>
+            <p>Oftentimes there has been a double purpose in this heralding: "The bringing of the eternal fires, and also the heralding, by a bird, of the peace which man will finally bring into the world..."</p>
+
+            <h3>The Seven Rays</h3>
+            <p>The colors over the sun represent the seven rays; again carried out in the colors of the rays of the spectrum on the wall adjoining.</p>
+
+            <h3>Solar Significance</h3>
+            <p>The central sun represents the source from which all life is nourished. All forms of early religion contained sun worship, recognizing this fundamental truth about the source of life energy.</p>
+
+            <p>The evolutionary forms depicted show the progression from the lower group representing forms leading up to humanity (the vertebrates), while the group above shows those which are leading toward insect life, each following its own path of development.</p>
+
+            <p>The dual aspect of creation and destruction shown in the two figures represents the cosmic principle that the destroyer destroys the unfit, the forms which will later be reincarnated into fitter shapes, while the figure on the left carries the 'eternal fire' to humanity and heralds its approach through the peace which man will finally bring into the world.</p>
+        </div>
+    </div>
+
+    <!-- North Wall Content -->
+    <div id="northContent" class="wall-content">
+        <h2>North Wall - Nature's Patterns and Growth</h2>
+        <p>This wall focuses on the natural world and how life develops and grows. You'll see elephant-like figures that represent the slow, steady progress of evolution and consciousness. These aren't meant to be realistic elephants, but symbols of how awareness gradually develops over time.</p>
+        
+        <p>The wall also features beautiful leaf patterns and plant forms that show how nature captures sunlight and turns it into life energy. There are detailed images of pollen grains and snowflakes, demonstrating how the same beautiful patterns that exist in tiny, microscopic things also appear in the vast cosmos. It's a celebration of how nature creates art at every level, from the smallest seed to the largest star.</p>
+        
+        <button class="deep-dive-btn" onclick="toggleDeepDive('north')">🔍 Deep Dive - Learn More</button>
+        
+        <div id="northDetailed" class="detailed-content">
+            <h3>Evolution of Form - Detailed Analysis</h3>
+            <h3>Evolution of Form</h3>
+            <p>The space on the north wall being limited, the artist here confined himself to elephantine figures as symbolic of the evolution of form. The figures are not of actual evolutionary succession, but the graded similar forms illustrate the principle of the evolution of form.</p>
+
+            <h3>The Significance of Chlorophyll</h3>
+            <p>The leaf-forms which appear in this mural are complementary to the group of symbols which appear just opposite. These leaves remind us that they serve the purpose of collecting chlorophyll, drawing from the sun that energy which is basic to all that lives. Animals do not have this power of extracting energy directly from the sun; thus this possession of chlorophyll seems as good a dividing line as any between the animal and vegetable kingdoms.</p>
+
+            <h3>Cosmic Patterns</h3>
+            <p>The parallel column above the north wall shows pollen grains in their various forms, while the snow crystals are shown in an astronomical design representing the life of the stars in their courses.</p>
+
+            <h3>Universal Life Principles</h3>
+            <p>This wall illustrates the Theosophical teaching that the same evolutionary principles operating in the development of animal forms also govern the plant kingdom and extend even to the cosmic realm. The elephantine forms represent not just physical evolution but the gradual unfoldment of consciousness through increasingly complex forms.</p>
+
+            <p>The emphasis on chlorophyll points to a fundamental truth: different kingdoms of nature have developed different ways of receiving and utilizing the life force that flows from the spiritual sun. Plants capture this energy directly through their leaves, while animals must obtain it indirectly through consuming plants or other animals.</p>
+
+             width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .wall-label {
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .instruction {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .wall-content {
+            display: none;
+            background: rgba(255,255,255,0.95);
+            color: #2c3e50;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .wall-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .wall-content h2 {
+            color: #3498db;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .wall-content h3 {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            margin: 20px 0 10px 0;
+        }
+
+        .wall-content p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            text-align: justify;
+        }
+
+        .wall-content ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .wall-content li {
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        .quote {
+            font-style: italic;
+            background: rgba(52, 152, 219, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2rem;
@@ -327,3 +619,4 @@
     </script>
 </body>
 </html>
+
